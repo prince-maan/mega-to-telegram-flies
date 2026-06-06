@@ -33,7 +33,7 @@ def keep_alive():
 # Aapki Telegram API ID, API Hash aur Bot Token
 API_ID = "39689089"
 API_HASH = "d23063ec3a2d899c60bd9d64bf3f7826"
-BOT_TOKEN = "8793293236:AAH1dVIRjlY7dGNNsocG8YZUq0AkG0p09Jo"
+BOT_TOKEN = "8793293236:AAH1dVIRjlY7dGNNsocG8YZUqOAkG0p09Jo"
 
 app = Client("mega_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 mega = Mega()
