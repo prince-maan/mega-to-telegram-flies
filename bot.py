@@ -1,5 +1,14 @@
 import os
 import asyncio
+
+# FIX: Python 3.14 ke liye Event Loop sabse upar banana padega!
+# Yeh Pyrogram import hone se pehle chalna zaroori hai.
+try:
+    loop = asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
 import threading
 from pyrogram import Client, filters
 from mega import Mega
@@ -52,11 +61,6 @@ async def handle_mega_link(client, message):
         await status_msg.edit_text(f"❌ Error aaya: {e}")
 
 if __name__ == "__main__":
-    keep_alive()  # Web server chalu karega taaki Render band na ho
+    keep_alive()  # Dummy website chalu karega
     print("Bot is running...")
-    
-    # Python ke naye version (3.14) ke liye Event Loop Fix
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    
     app.run()     # Telegram bot chalu karega
