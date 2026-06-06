@@ -1,8 +1,9 @@
 import os
+import asyncio
+import threading
 from pyrogram import Client, filters
 from mega import Mega
 from flask import Flask
-import threading
 
 # --- Dummy Web Server (Render ko free plan par chalane ke liye) ---
 web_app = Flask(__name__)
@@ -12,7 +13,6 @@ def home():
     return "Bot is running perfectly on Render!"
 
 def run_web():
-    # Render automatically PORT deta hai, warna 8000 use karega
     port = int(os.environ.get("PORT", 8000))
     web_app.run(host="0.0.0.0", port=port)
 
@@ -21,10 +21,10 @@ def keep_alive():
     t.start()
 # -----------------------------------------------------------------
 
-# Yahan apni Telegram API ID, API Hash aur Bot Token dalein
+# Aapki Telegram API ID, API Hash aur Bot Token
 API_ID = "39689089"
 API_HASH = "d23063ec3a2d899c60bd9d64bf3f7826"
-BOT_TOKEN = "8793293236:AAH1dVIRjlY7dGNNsocG8YZUqOAkG0p09Jo"
+BOT_TOKEN = "8793293236:AAH1dVIRjlY7dGNNsocG8YZUq0AkG0p09Jo"
 
 app = Client("mega_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 mega = Mega()
@@ -52,6 +52,11 @@ async def handle_mega_link(client, message):
         await status_msg.edit_text(f"❌ Error aaya: {e}")
 
 if __name__ == "__main__":
-    keep_alive()  # Yeh web server chalu karega taaki Render band na ho
+    keep_alive()  # Web server chalu karega taaki Render band na ho
     print("Bot is running...")
-    app.run()     # Yeh Telegram bot chalu karega
+    
+    # Python ke naye version (3.14) ke liye Event Loop Fix
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    
+    app.run()     # Telegram bot chalu karega
