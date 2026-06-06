@@ -1,1 +1,1 @@
-pip install pyrogram tgcrypto mega.py
+pyrogram tgcrypto mega.py
